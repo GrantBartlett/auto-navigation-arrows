@@ -6,16 +6,16 @@ This WordPress plugin will generate previous and next navigation arrows on the c
 
 ## Code Example
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+Plugin not finished, todo.
 
-## Motivation
+## About
 
 I've made this to ensure the likes of this type of code is not embedded deep within a theme template no-one can find. I plan to allow this to be installed as a widget for anyone to use. 
 
 
 ## Installation
 
-Plugin not finished
+Plugin not finished, todo.
 
 
 ## Tests

@@ -24,12 +24,11 @@ class AutoNavigationArrows extends WP_Widget {
 
     protected $widgetClass = 'Auto_Navigation_Arrows';
     protected $widgetName = 'Auto Navigation Arrows';
-
-    private $widgetDesc = 'This plugin will generate previous and next navigation arrows on active page';
-    private $widgetSlug = 'auto-navigation-arrows';
-    private $arrayOfPages = [];
-    private $configureLinks = [];
-
+    protected $widgetDesc = 'This plugin will generate previous and next navigation arrows on active page';
+    protected $widgetSlug = 'auto-navigation-arrows';
+    protected $arrayOfPages = [];
+    protected $configureLinks = [];
+	protected $prevNextLinks = [];
 
 
     /**
@@ -77,12 +76,9 @@ class AutoNavigationArrows extends WP_Widget {
 
         echo $args['before_widget'];
 
-
         include( plugin_dir_path(__FILE__) . 'views/widget.php' );
 
-
         echo $args['after_widget'];
-
     }
 
 
@@ -129,25 +125,39 @@ class AutoNavigationArrows extends WP_Widget {
         load_plugin_textdomain( $this->getWidgetSlug(), false, plugin_dir_path( __FILE__ ) . 'lang/' );
     }
 
-    /**
-     * @param array $configureLinks
-     */
-    public function setConfigureLinks( $configureLinks ) {
-        $pageIdsArray = array();
+	/**
+	 * @param array $configureLinks
+	 */
+	public function setConfigureLinks( $configureLinks ) {
+		// Take arguments set by getArrayOfPages
+		foreach ( $this->getArrayOfPages( $configureLinks ) as $page ) {
+			$this->configureLinks['page'][] += $page->ID;
+		}
+	}
 
-        // Take arguments set by @getArrayOfPages
-        foreach ( $this->getArrayOfPages( $configureLinks ) as $page ) {
-            $pageIdsArray[] += $page->ID;
-        }
-        $this->configureLinks = $pageIdsArray;
-    }
+	/**
+	 * @return array
+	 */
+	public function getConfigureLinks() {
+		return $this->configureLinks;
+	}
 
-    /**
-     * @return array
-     */
-    public function getConfigureLinks() {
-        return $this->configureLinks;
-    }
+	/**
+	 * @return array
+	 */
+	public function getPrevNextLinks() {
+		// Get page ids and store them into array
+		$pageIdArray = $this->getConfigureLinks();
+
+		// Find current pay key in pageIdArray
+		$pageKeyCurrent = array_search( get_the_ID(), $pageIdArray['page'] );
+
+		$prevNextLinks['previous'] = $pageIdArray['page'][ $pageKeyCurrent - 1 ];
+		$prevNextLinks['next'] = $pageIdArray['page'][ $pageKeyCurrent + 1 ];
+
+		return $prevNextLinks;
+	}
+
 
     /**
      * @return array

@@ -16,19 +16,39 @@
  * Author: Grant Bartlett
  * Author URI: http://grant-bartlett.com
  * Text Domain: auto-navigation-arrows
- * GitHub Plugin URI: @TODO
+ * GitHub Plugin URI: https://github.com/GrantBartlett/auto-navigation-arrows
  *
  */
-
 class AutoNavigationArrows extends WP_Widget {
 
+    /**
+     * @var string
+     */
     protected $widgetClass = 'Auto_Navigation_Arrows';
+    /**
+     * @var string
+     */
     protected $widgetName = 'Auto Navigation Arrows';
+    /**
+     * @var string
+     */
     protected $widgetDesc = 'This plugin will generate previous and next navigation arrows on active page';
+    /**
+     * @var string
+     */
     protected $widgetSlug = 'auto-navigation-arrows';
-    protected $arrayOfPages = [];
-    protected $configureLinks = [];
-	protected $prevNextLinks = [];
+    /**
+     * @var array
+     */
+    protected $arrayOfPages = [ ];
+    /**
+     * @var array
+     */
+    protected $configureLinks = [ ];
+    /**
+     * @var array
+     */
+    protected $prevNextLinks = [ ];
 
 
     /**
@@ -62,8 +82,6 @@ class AutoNavigationArrows extends WP_Widget {
     }
 
 
-
-
     /**
      * Outputs the content of the Widget
      *
@@ -72,16 +90,14 @@ class AutoNavigationArrows extends WP_Widget {
      * @param array $args - The array of form elements
      * @param array $instance - The current instance of the widget
      */
-    public function widget( $args, $instance ){
+    public function widget( $args, $instance ) {
 
         echo $args['before_widget'];
 
-        include( plugin_dir_path(__FILE__) . 'views/widget.php' );
+        include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 
         echo $args['after_widget'];
     }
-
-
 
 
     /**
@@ -94,14 +110,11 @@ class AutoNavigationArrows extends WP_Widget {
      *
      * @return array
      */
-    public function update( $new_instance, $old_instance ){
+    public function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
 
         return $instance;
     }
-
-
-
 
 
     /**
@@ -115,9 +128,6 @@ class AutoNavigationArrows extends WP_Widget {
     }
 
 
-
-
-
     /**
      * Register Widget Text Domain
      */
@@ -125,44 +135,44 @@ class AutoNavigationArrows extends WP_Widget {
         load_plugin_textdomain( $this->getWidgetSlug(), false, plugin_dir_path( __FILE__ ) . 'lang/' );
     }
 
-	/**
-	 * @param array $configureLinks
-	 */
-	public function setConfigureLinks( $configureLinks ) {
-		// Take arguments set by getArrayOfPages
-		foreach ( $this->getArrayOfPages( $configureLinks ) as $page ) {
-			$this->configureLinks['page'][] += $page->ID;
-		}
-	}
+    /**
+     * @param array $configureLinks
+     */
+    public function setConfigureLinks( $configureLinks ) {
+        // Take arguments set by getArrayOfPages
+        foreach ( $this->getArrayOfPages( $configureLinks ) as $page ) {
+            $this->configureLinks['page'][] += $page->ID;
+        }
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getConfigureLinks() {
-		return $this->configureLinks;
-	}
+    /**
+     * @return array
+     */
+    public function getConfigureLinks() {
+        return $this->configureLinks;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getPrevNextLinks() {
-		// Get page ids and store them into array
-		$pageIdArray = $this->getConfigureLinks();
+    /**
+     * @return array
+     */
+    public function getPrevNextLinks() {
+        // Get page ids and store them into array
+        $pageIdArray = $this->getConfigureLinks();
 
-		// Find current pay key in pageIdArray
-		$pageKeyCurrent = array_search( get_the_ID(), $pageIdArray['page'] );
+        // Find current pay key in pageIdArray
+        $pageKeyCurrent = array_search( get_the_ID(), $pageIdArray['page'] );
 
-		$prevNextLinks['previous'] = $pageIdArray['page'][ $pageKeyCurrent - 1 ];
-		$prevNextLinks['next'] = $pageIdArray['page'][ $pageKeyCurrent + 1 ];
+        $prevNextLinks['previous'] = $pageIdArray['page'][ $pageKeyCurrent - 1 ];
+        $prevNextLinks['next']     = $pageIdArray['page'][ $pageKeyCurrent + 1 ];
 
-		return $prevNextLinks;
-	}
+        return $prevNextLinks;
+    }
 
 
     /**
      * @return array
      */
-    public function getArrayOfPages($arrayOfPages) {
+    public function getArrayOfPages( $arrayOfPages ) {
         return $this->arrayOfPages = get_pages( $arrayOfPages );
     }
 

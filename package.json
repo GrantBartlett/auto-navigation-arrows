@@ -1,0 +1,41 @@
+{
+  "name": "auto-navigation-arrows",
+  "version": "1.0.0",
+  "description": "This WordPress plugin will generate previous and next navigation arrows on the current page.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GrantBartlett/auto-navigation-arrows.git"
+  },
+  "keywords": [
+    "wordpress",
+    "widget",
+    "plugin",
+    "php"
+  ],
+  "author": "Grant Bartlett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GrantBartlett/auto-navigation-arrows/issues"
+  },
+  "homepage": "https://github.com/GrantBartlett/auto-navigation-arrows",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^2.2.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-init": "^0.3.2",
+    "grunt-modernizr": "^0.6.0",
+    "grunt-version": "^0.3.1",
+    "less": "^2.4.0",
+    "load-grunt-tasks": "^3.1.0",
+    "modernizr": "^3.0.0-pre",
+    "time-grunt": "^1.0.0"
+  }
+}

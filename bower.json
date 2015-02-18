@@ -1,0 +1,24 @@
+{
+  "name": "auto-navigation-arrows",
+  "version": "1.0.0",
+  "homepage": "https://github.com/GrantBartlett/auto-navigation-arrows",
+  "authors": [
+    "Grant Bartlett <grant@smswmedia.com>"
+  ],
+  "description": "This WordPress plugin will generate previous and next navigation arrows on the current page.",
+  "main": "AutoNavigationArrows.php",
+  "keywords": [
+    "wordpress",
+    "widget",
+    "plugin",
+    "php"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

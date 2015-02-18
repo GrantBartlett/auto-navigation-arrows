@@ -22,33 +22,31 @@
 class AutoNavigationArrows extends WP_Widget {
 
     /**
+     * Constructor setup use consistency
      * @var string
      */
-    protected $widgetClass = 'Auto_Navigation_Arrows';
+    private $widgetClass = 'Auto_Navigation_Arrows';
+    private $widgetName = 'Auto Navigation Arrows';
+    private $widgetDesc = 'This plugin will generate previous and next navigation arrows on active page';
+    private $widgetSlug = 'auto-navigation-arrows';
+
     /**
-     * @var string
-     */
-    protected $widgetName = 'Auto Navigation Arrows';
-    /**
-     * @var string
-     */
-    protected $widgetDesc = 'This plugin will generate previous and next navigation arrows on active page';
-    /**
-     * @var string
-     */
-    protected $widgetSlug = 'auto-navigation-arrows';
-    /**
+     * Stores output of @get_pages() WordPress method
      * @var array
      */
-    protected $arrayOfPages = [ ];
+    private $arrayOfPages = [];
+
     /**
+     * Stores page IDs only
      * @var array
      */
-    protected $configureLinks = [ ];
+    private $configureLinks = [];
+
     /**
+     * Stores previous/next array ids
      * @var array
      */
-    protected $prevNextLinks = [ ];
+    private $prevNextLinks = [];
 
 
     /**
@@ -81,7 +79,6 @@ class AutoNavigationArrows extends WP_Widget {
 
     }
 
-
     /**
      * Outputs the content of the Widget
      *
@@ -99,7 +96,6 @@ class AutoNavigationArrows extends WP_Widget {
         echo $args['after_widget'];
     }
 
-
     /**
      * Processes the widgets options to be saved
      *
@@ -116,17 +112,18 @@ class AutoNavigationArrows extends WP_Widget {
         return $instance;
     }
 
-
     /**
      * Generates the admin form for the widget
      *
      * WordPress Widget API
      *
+     * @param array $instance
+     *
+     * @return array
      */
     public function form( $instance ) {
         return $instance;
     }
-
 
     /**
      * Register Widget Text Domain
@@ -141,38 +138,35 @@ class AutoNavigationArrows extends WP_Widget {
     public function setConfigureLinks( $configureLinks ) {
         // Take arguments set by getArrayOfPages
         foreach ( $this->getArrayOfPages( $configureLinks ) as $page ) {
-            $this->configureLinks['page'][] += $page->ID;
+            $this->configureLinks[] += $page->ID;
         }
     }
 
     /**
      * @return array
      */
-    public function getConfigureLinks() {
+    private function getConfigureLinks() {
         return $this->configureLinks;
     }
 
     /**
+     * Stores previous and next page IDs based on setConfigureLinks() arguments
      * @return array
      */
     public function getPrevNextLinks() {
-        // Get page ids and store them into array
-        $pageIdArray = $this->getConfigureLinks();
-
         // Find current pay key in pageIdArray
-        $pageKeyCurrent = array_search( get_the_ID(), $pageIdArray['page'] );
+        $pageKeyCurrent = array_search( get_the_ID(), $this->getConfigureLinks() );
 
-        $prevNextLinks['previous'] = $pageIdArray['page'][ $pageKeyCurrent - 1 ];
-        $prevNextLinks['next']     = $pageIdArray['page'][ $pageKeyCurrent + 1 ];
+        $prevNextLinks['previous'] = $this->getConfigureLinks()[ $pageKeyCurrent - 1 ];
+        $prevNextLinks['next'] = $this->getConfigureLinks()[ $pageKeyCurrent + 1 ];
 
         return $prevNextLinks;
     }
 
-
     /**
      * @return array
      */
-    public function getArrayOfPages( $arrayOfPages ) {
+    private function getArrayOfPages( $arrayOfPages ) {
         return $this->arrayOfPages = get_pages( $arrayOfPages );
     }
 
@@ -180,14 +174,14 @@ class AutoNavigationArrows extends WP_Widget {
      * Widget Name
      * @return string
      */
-    public function getWidgetName() {
+    private function getWidgetName() {
         return $this->widgetName;
     }
 
     /**
      * @return string
      */
-    public function getWidgetClass() {
+    private function getWidgetClass() {
         return $this->widgetClass;
     }
 
@@ -195,7 +189,7 @@ class AutoNavigationArrows extends WP_Widget {
      * Widget Description
      * @return string
      */
-    public function getWidgetDesc() {
+    private function getWidgetDesc() {
         return $this->widgetDesc;
     }
 
@@ -203,7 +197,7 @@ class AutoNavigationArrows extends WP_Widget {
      * Widget Slug
      * @return string
      */
-    public function getWidgetSlug() {
+    private function getWidgetSlug() {
         return $this->widgetSlug;
     }
 

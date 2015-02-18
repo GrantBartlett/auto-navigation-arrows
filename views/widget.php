@@ -12,9 +12,7 @@ $links->setConfigureLinks( $args );
 ?>
 
 <?php foreach ( $links->getPrevNextLinks() as $k => $v ) : ?>
-
 	<a href="<?php echo get_permalink( $v ); ?>" title="<?php echo get_the_title( $v ); ?>"><?php echo get_the_title( $v ); ?></a>
-
 <?php endforeach; ?>
 
 

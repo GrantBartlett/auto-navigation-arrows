@@ -43,10 +43,10 @@ module.exports = function (grunt) {
             },
             build: {
                 files: {
-                    'assets/css/admin.min.css': [
+                    'dist/assets/css/admin.min.css': [
                         'assets/less/admin.less'
                     ],
-                    'assets/css/widget.min.css': [
+                    'dist/assets/css/widget.min.css': [
                         'assets/less/widget.less'
                     ]
                 },
@@ -55,26 +55,17 @@ module.exports = function (grunt) {
                 }
             }
         },
-        concat: {
-            basic_and_extras: {
-                files: {
-                    'assets/js/admin.js': ['assets/js/admin.min.js']
-                }
-            }
-        },
-        uglify: {
-            dist: {
-                //files: {
-                //    'assets/js/scripts.min.js': [jsFileList]
-                //}
 
-                files: {
-                    'assets/js/admin.min.js': [
-                        'assets/js/admin.js'
-                    ]
-                }
+        uglify: {
+            min: {
+                files: grunt.file.expandMapping(['assets/**/*.js'], 'dist/', {
+                    rename: function (destBase, destPath) {
+                        return destBase + destPath.replace('.js', '.min.js');
+                    }
+                })
             }
         },
+
         autoprefixer: {
             options: {
                 browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
@@ -88,7 +79,7 @@ module.exports = function (grunt) {
                 src: ['assets/css/admin.css', 'assets/css/widget.css']
             },
             build: {
-                src: ['assets/css/admin.min.css', 'assets/css/widget.min.css']
+                src: ['dist/assets/css/admin.min.css', 'dist/assets/css/widget.min.css']
             }
         },
         version: {
@@ -115,14 +106,16 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['less:dev', 'autoprefixer:dev']
             },
+
             js: {
-                files: [
-                    jsFileList,
-                    '<%= jshint.all %>'
-                ],
-                tasks: ['jshint', 'concat']
-                //tasks: ['jshint']
+                files: 'assets/js/*.js',
+                tasks: ['jshint', 'uglify'],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
             },
+
             livereload: {
                 // Browser live reloading
                 // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
@@ -130,8 +123,9 @@ module.exports = function (grunt) {
                     livereload: false
                 },
                 files: [
+                    'assets/**/*.js',
                     'assets/css/main.css',
-                    'assets/js/widget.js',
+                    'assets/js/admin.js',
                     'views/*.php',
                     '*.php'
                 ]
@@ -143,17 +137,20 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'dev'
     ]);
+
     grunt.registerTask('dev', [
         'jshint',
         'less:dev',
         'autoprefixer:dev',
         'concat'
     ]);
+
     grunt.registerTask('build', [
         'jshint',
         'less:build',
         'autoprefixer:build',
         'uglify',
+        'modernizr',
         'version'
     ]);
 };

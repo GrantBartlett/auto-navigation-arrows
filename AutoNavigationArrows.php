@@ -22,7 +22,7 @@
 class AutoNavigationArrows extends WP_Widget {
 
     /**
-     * Constructor setup use consistency
+     * Widget variables
      * @var string
      */
     private $widgetClass = 'Auto_Navigation_Arrows';

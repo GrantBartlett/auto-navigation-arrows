@@ -71,6 +71,8 @@ class AutoNavigationArrows extends WP_Widget {
             )
         );
 
+
+
         // @TODO: Register admin styles and scripts
 
         // @TODO: Register site styles and scripts
@@ -200,7 +202,6 @@ class AutoNavigationArrows extends WP_Widget {
     private function getWidgetSlug() {
         return $this->widgetSlug;
     }
-
 }
 
 add_action( 'widgets_init', create_function( '', 'register_widget("AutoNavigationArrows");' ) );

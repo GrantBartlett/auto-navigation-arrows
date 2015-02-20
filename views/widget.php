@@ -14,22 +14,6 @@ $args = array(
 $links = new AutoNavigationArrows();
 $links->setConfigureLinks( $args );
 ?>
-<style>
-	.fixed-navigation {
-		position: absolute;
-		top: 33%;
-		display: block;
-		background: #40454E;
-		height: 150px;
-		line-height: 150px;
-	}
-	.fixed-navigation.previous {
-		left: 0;
-	}
-	.fixed-navigation.next {
-		right: 0;
-	}
-</style>
 
 <?php foreach ( $links->getPrevNextLinks() as $linkType => $id ) : ?>
 	<div class="fixed-navigation <?php echo $linkType; ?>">
